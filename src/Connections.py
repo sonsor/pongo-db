@@ -36,6 +36,15 @@ class Connections:
         if not self.validate(data):
             return False
 
-        
+        connection = Connection(self.db)
+        id = connection.create({'name': data.get('name'), 'type': data.get('type')})
+
+        replicaSet = ReplicaSet(self.db)
+        for host in data.get('hosts'):
+            replicaSet.create('host': host.host, 'port': host.port, 'connectionId': id})
+
+        ssh = SshCredential(self.db)
+        if data.get('ssh'):
+            ssh.create({})
 
 
