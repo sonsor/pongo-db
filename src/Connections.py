@@ -9,7 +9,7 @@ class Connections:
         if not data.get('name') || not data.get('type'):
             return False
 
-        if get.get('ssh'):
+        if get.get('isSSH'):
             if not data.get('sshCredential'):
                 return False
 
@@ -43,8 +43,15 @@ class Connections:
         for host in data.get('hosts'):
             replicaSet.create('host': host.host, 'port': host.port, 'connectionId': id})
 
-        ssh = SshCredential(self.db)
         if data.get('ssh'):
-            ssh.create({})
+            data.get('sshCredential').set('connectId', id)
+            self.handleSSH(data.get('sshCredential'));
+
+    def handleSSH(self, data):
+        ssh = SshCredential(self.db)
+        keys = ['host', 'user', 'pass', 'type', 'port', 'connectId', 'key']
+        data = {k: v for k,v in data.items()}
+        ssh.create(data)
+
 
 

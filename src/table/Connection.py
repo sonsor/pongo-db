@@ -16,10 +16,10 @@ class Connection(BaseTable):
     dbname = TextField(not_null=True)
 
     # ssh credentials
-    ssh = BooleanField(not_null=True, default_value=0)
+    isSSH = BooleanField(not_null=True, default_value=0)
 
     # ssl
-    ssl = BooleanField(not_null=True, default_value=0)
+    isSSL = BooleanField(not_null=True, default_value=0)
 
 
 
