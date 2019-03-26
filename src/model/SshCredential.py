@@ -5,16 +5,19 @@ class SshCredential:
         self.db = db
 
     def findById(self, id):
-        return self.db.query(ReplicaSetTable).filter(SshCredentialTable.ID == id).select().execute()
+        return self.db.query(SshCredentialTable).filter(SshCredentialTable.ID == id).select().execute()
 
     def update(self, id, date):
-        self.db.query(ReplicaSetTable).update(data).filter(SshCredentialTable.ID == id).execute()
+        self.db.query(SshCredentialTable).update(data).filter(SshCredentialTable.ID == id).execute()
         return True
 
     def create(self, data):
-        replicaSet = SshCredentialTable(data)
-        cursor = self.db.query().insert(replicaSet).execute()
+        sshCredential = SshCredentialTable(data)
+        cursor = self.db.query().insert(sshCredential).execute()
         return cursor.lastrowid
 
     def remove(self, id):
         db.query().delete().filter(SshCredentialTable.ID == id).execute()
+
+    def getByConnection(self, id):
+        return db.query(SshCredentialTable).filter(SshCredentialTable.connectionId == id).execute()

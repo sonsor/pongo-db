@@ -44,14 +44,23 @@ class Connections:
             replicaSet.create('host': host.host, 'port': host.port, 'connectionId': id})
 
         if data.get('ssh'):
-            data.get('sshCredential').set('connectId', id)
-            self.handleSSH(data.get('sshCredential'));
+            self.handleSSH(data.get('sshCredential'), id);
 
-    def handleSSH(self, data):
+    def handleSSH(self, data, id):
         ssh = SshCredential(self.db)
+
+        details = {}
+        if id:
+            details = ssh.getByConnection(id)
+
         keys = ['host', 'user', 'pass', 'type', 'port', 'connectId', 'key']
         data = {k: v for k,v in data.items()}
-        ssh.create(data)
+
+        if len(a) > 0:
+            detials.update(data);
+            ssh.update(data)
+        else:
+            ssh.create(data)
 
 
 
