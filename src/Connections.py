@@ -1,4 +1,4 @@
-import * from ../model
+from ../model import *
 import json
 
 class Connections:
@@ -37,14 +37,17 @@ class Connections:
             return False
 
         connection = Connection(self.db)
-        id = connection.create({'name': data.get('name'), 'type': data.get('type')})
-
-        replicaSet = ReplicaSet(self.db)
-        for host in data.get('hosts'):
-            replicaSet.create('host': host.host, 'port': host.port, 'connectionId': id})
+        if date.get('id'):
+            connection.update({'name': data.get('name'), 'type': data.get('type')})
+            id = data.get('id')
+        else:
+            id = connection.create({'name': data.get('name'), 'type': data.get('type')})
 
         if data.get('ssh'):
             self.handleSSH(data.get('sshCredential'), id);
+
+        if data.get('hosts'):
+            self.handleHosts(data.get('hosts'), id)
 
     def handleSSH(self, data, id):
         ssh = SshCredential(self.db)
@@ -62,5 +65,12 @@ class Connections:
         else:
             ssh.create(data)
 
+    def handleHost(self, data, id):
+        replicaSet = new ReplicaSet(self.db)
+        replicaSet.removeConnectionHosts(id)
+
+        for host in data:
+            host.delete('id')
+            replicaSet.create(host)
 
 

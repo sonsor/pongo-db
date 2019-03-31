@@ -1,6 +1,6 @@
-import Connection as ConnectionTable from ../table
-import ReplicaSet as ReplicaSetTable from ../table
-import SshCrendtial as SshCredentialTable from ../table
+from ../table import Connection as ConnectionTable
+from ../table import ReplicaSet as ReplicaSetTable
+from ../table import SshCrendtial as SshCredentialTable
 
 class Connection:
     def __init__(self, db):

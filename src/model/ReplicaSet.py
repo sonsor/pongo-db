@@ -17,3 +17,6 @@ class ReplicaSet:
 
     def remove(self, id):
         db.query().delete().filter(ReplicaSetTable.ID ==     id).execute()
+
+    def removeConnectionHosts(self, id)
+        db.query().delete().filter(ReplicaSetTable.connectionId == id).execute()
